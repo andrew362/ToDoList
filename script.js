@@ -1,6 +1,8 @@
 const taskList = $('#taskList');
 const preHtml = '<li class="list-group-item d-flex justify-content-between align-items-center" data-id="';
 const postHtml = '</p><span><buttontype="button" class="btn btn-sm btn-danger">&times</button></span></li>';
+var taskObj = {};
+var taskArray = [];
 
 function removeChar(string) {
     var newString = '';
@@ -12,43 +14,116 @@ function removeChar(string) {
     return newString;
 }
 
-function addToLocalStorage(task) {
-    var date = new Date();
-    var taskId = date.getTime();
-    localStorage.setItem(taskId, task);
-    taskList.append(preHtml + taskId + '"><p>' + task + postHtml);
-    console.log(taskId, task);
+//function addToLocalStorage(task) {
+//    var date = new Date();
+//    var taskId = date.getTime();
+//    localStorage.setItem(taskId, JSON.stringify(task));
+//    taskList.append(preHtml + taskId + '"><p>' + task.text + postHtml);
+//    console.log(taskId, task, task.text);
+//}
+
+//function addToLocalStorage(arr){
+//    for(i=0; i < arr.length; i++){
+//        localStorage.setItem(arr[i].id, JSON.stringify(arr[i].text));
+//    }
+//}
+
+function addToTaskArray(obj){
+    taskArray.push(obj);
+    taskList.append(preHtml + obj.id + '"><p>' + obj.text + postHtml);
+    console.log(taskArray);
+    
+    
 }
 
 function readFromLocalStorage() {
+    taskArray = [];
     for(var i = 0; i < localStorage.length; i++){
-        var task = preHtml + localStorage.key(i) + '"><p>' + localStorage.getItem(localStorage.key(i)) + postHtml;
+        var localStorageObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        var task = preHtml + localStorage.key(i) + '"><p>' + localStorageObj.text + postHtml;
         taskList.append(task);
+        taskArray.push(localStorageObj);
+        //console.log($('#taskList li:last').addClass('done'));
+        var temp = $('#taskList li:last');
+        if(localStorageObj.done == 1){
+            temp.addClass('done');
+        }else if (localStorageObj.done == 0){
+            temp.removeClass('done');
+        }  
     }
+
+    console.log(taskArray);
 }
 
-function removeFromListAndLocalStorage(task) {
+
+
+function removeFromList(task) {
     if(confirm("Czy chcesz usunąć zadanie? " + "'" + task.firstChild.innerText + "'")) {
-       task.remove();
-       localStorage.removeItem(task.dataset.id);
+       
+        let taskId = task.dataset.id;
+        console.log(taskArray);
+        for (var i = 0; i < taskArray.length; i++) {
+        if (taskArray[i].id == taskId) {
+            console.log(i);
+            taskArray.splice(i,1);
+        }
+        task.remove();
        }
+        console.log(taskArray);
+}
+}
+
+function toggleTaskDone(task){
+    let taskId = task.dataset.id;
+    for (var i = 0; i < taskArray.length; i++) {
+        if (taskArray[i].id == taskId) {
+                if(taskArray[i].done == 1){
+                    taskArray[i].done = 0;
+                    task.classList.remove('done');
+                    console.log(i,taskArray[i]);
+                } else {
+                    taskArray[i].done = 1;
+                    task.classList.add('done');
+                    console.log(i,task,taskArray[i]);
+                }
+        }
+}
+    console.log(taskArray);
 }
 
 function addNewTask() {
     var newTask = $("#newTask").val();
     var newString = removeChar(newTask);
+    var date = new Date();
+    var taskId = date.getTime();
     if (newString.trim() !== ''){
-        addToLocalStorage(newString);
+        let taskObj = {
+            id: taskId,
+            done: 0,
+            text: newString
+        };
+        //addToLocalStorage(taskObj);
+        addToTaskArray(taskObj);
         $("#newTask").val('');
     }
 }
 
+//function checkTaskDone(taskObj) {
+//    if(taskObj.done == 1){
+//        $(this).removeClass('done');
+//        return taskObj.done = 0;
+//    } else {
+//        $(this).addClass('done');
+//        return taskObj.done = 1;
+//    }
+//}
 
 //usuwanie tasków z listy
 
 $(document).on('click', '.btn-danger', function(){
-    let taskRow = this.closest("li");
-    removeFromListAndLocalStorage(taskRow);
+    let task = this.closest("li");
+    removeFromList(task);
+    //console.log(taskRow);
 });
 
 //dodawanie nowych tasków
@@ -65,10 +140,33 @@ $(document).keypress(function(event){
 //zaznaczenie wykonanych tasków
 
 $(document).on('click','#taskList li p', function(){
-    $(this).toggleClass('done');
+    //$(this).toggleClass('done');
+    let task = this.closest("li");
+    toggleTaskDone(task);
+    
+//    let taskID = this.closest("li").dataset.id;
+//    let taskObj = localStorage.getItem(taskID);
+//    if(taskObj.done == 1){
+//        $(this).removeClass('done');
+//        taskObj.done = 0;
+//        console.log(taskObj);
+//    } else {
+//        $(this).addClass('done');
+//        taskObj.done = 1;
+//
+//    }
+    //localStorage.removeItem(taskRow);
+});
+
+$(window).on('beforeunload', function(){
+    localStorage.clear();
+    for(i=0; i < taskArray.length; i++){
+        localStorage.setItem(taskArray[i].id, JSON.stringify(taskArray[i]));
+    }
 });
 
 readFromLocalStorage();
+
 
 
 
