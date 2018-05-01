@@ -14,7 +14,7 @@
             text-overflow:ellipsis;
         }
         .done{
-            text-decoration: line-through;
+            text-decoration: line-through !important;
             color: rgb(150, 150, 150);
         }
 
@@ -22,11 +22,13 @@
 </head>
 <body>
     <header class="text-center">
-        <h1 class="display-1">To Do List</h1>
+        <h1 class="display-3">To Do List</h1>
     </header>
     <main>
         <div class="container d-flex justify-content-center">
-            <ul  class="list-group w-50">
+      
+            
+            <ul  class="list-group w-100">
                 <div class="list-group-item active text-center ">
                     <div class="container input-group">
                      <input class="form-control" type="text" id="newTask" placeholder="Wpisz nowe zadanie...">
@@ -39,6 +41,7 @@
 <!--                 taskList                     -->
                 </div>
                 </ul>
+                
         </div>
     </main>
 
