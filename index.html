@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,46 +9,74 @@
     <link rel="stylesheet" href="bootstrap.min.css">
     <style>
         li p {
-            cursor: pointer;
             margin: 0;
-            overflow:hidden;
-            text-overflow:ellipsis;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .done{
+        .done {
             text-decoration: line-through !important;
             color: rgb(150, 150, 150);
         }
-
+        li:hover {
+            border: 1px solid;
+            cursor: pointer;
+            box-shadow: 1px 1px 2px #818182;
+        }
     </style>
 </head>
 <body>
+   
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div id="modal-txt" class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <button type="button" id="yesBtn" class="btn btn-primary">Usuń</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    
     <header class="text-center">
         <h1 class="display-3">To Do List</h1>
     </header>
     <main>
         <div class="container d-flex justify-content-center">
-      
-            
-            <ul  class="list-group w-100">
+            <ul class="list-group w-100">
                 <div class="list-group-item active text-center ">
                     <div class="container input-group">
-                     <input class="form-control" type="text" id="newTask" placeholder="Wpisz nowe zadanie...">
+                        <input class="form-control" type="text" id="newTask" placeholder="Wpisz nowe zadanie...">
                         <button type="button" id="addTask" class="btn btn-success float-right">
                             +
                         </button>
                     </div>
                 </div>
                 <div id="taskList">
-<!--                 taskList                     -->
+                    <!--                 taskList                     -->
                 </div>
-                </ul>
-                
+            </ul>
+
         </div>
     </main>
 
 
 
-    <script src="jquery-3.3.1.js"></script>
-    <script src="script.js"></script>
+    <script src="./jquery-3.2.1.slim.min.js"></script>
+    <script src="./bootstrap.min.js"></script>
+    <!--    <script src="./jquery-3.3.1.js"></script>-->
+    <script src="./script.js"></script>
+
 </body>
 </html>
