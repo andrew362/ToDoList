@@ -129,10 +129,21 @@ function removeFromList(task) {
             }
             task.remove();
         }
-        modalWindow.modal('hide');
-        modalBody.text('');
+       modalWindow.modal('hide');
+       modalBody.text('');
+    });
+    $(document).on('hide.bs.modal',modalWindow, function () {
+        confirmBtn.off('click'); //usuwanie listenera na buttonie usuń
     });
 }
+
+// confirmBtn.on('hide.bs.modal', function () {
+//     //confirmBtn.off('click');
+//     console.log('hide modal');
+//   });
+//   confirmBtn.modal('hide');
+
+
 
 
 $(document).on('click', '.btn-danger', function (e) {
