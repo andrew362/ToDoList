@@ -17,66 +17,32 @@ function removeChar(string) {
     return newString;
 }
 
-//function addToLocalStorage(task) {
-//    var date = new Date();
-//    var taskId = date.getTime();
-//    localStorage.setItem(taskId, JSON.stringify(task));
-//    taskList.append(preHtml + taskId + '"><p>' + task.text + postHtml);
-//    console.log(taskId, task, task.text);
-//}
-
-//function addToLocalStorage(arr){
-//    for(i=0; i < arr.length; i++){
-//        localStorage.setItem(arr[i].id, JSON.stringify(arr[i].text));
-//    }
-//}
-
 function addToTaskArray(obj) {
     taskArray.push(obj);
     taskList.append(preHtml + obj.id + '"><p>' + obj.text + postHtml);
     console.log(taskArray);
-
-
 }
 
 function readFromLocalStorage() {
     taskArray = [];
     for (var i = 0; i < localStorage.length; i++) {
         var localStorageObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        var task = preHtml + localStorage.key(i) + '"><p>' + localStorageObj.text + postHtml;
-        taskList.append(task);
-        taskArray.push(localStorageObj);
-        //console.log($('#taskList li:last').addClass('done'));
-        var temp = $('#taskList li:last');
-        if (localStorageObj.done == 1) {
-            temp.addClass('done');
-        } else if (localStorageObj.done == 0) {
-            temp.removeClass('done');
+        if (localStorageObj.id.indexOf("ToDoList_") != -1){
+            var task = preHtml + localStorage.key(i) + '"><p>' + localStorageObj.text + postHtml;
+            taskList.append(task);
+            taskArray.push(localStorageObj);
+            //console.log($('#taskList li:last').addClass('done'));
+            var temp = $('#taskList li:last');
+            if (localStorageObj.done == 1) {
+                temp.addClass('done');
+            } else if (localStorageObj.done == 0) {
+                temp.removeClass('done');
+            }
         }
     }
-
     console.log(taskArray);
 }
 
-
-
-
-
-//function removeFromList(task) {
-//    if(confirm("Czy chcesz usunąć zadanie? " + "'" + task.firstChild.innerText + "'")) {
-//       
-//        let taskId = task.dataset.id;
-//        console.log(taskArray);
-//        for (var i = 0; i < taskArray.length; i++) {
-//        if (taskArray[i].id == taskId) {
-//            console.log(i);
-//            taskArray.splice(i,1);
-//        }
-//        task.remove();
-//       }
-//        console.log(taskArray);
-//}
-//}
 
 function toggleTaskDone(task) {
     let taskId = task.dataset.id;
@@ -100,7 +66,7 @@ function addNewTask() {
     var newTask = $("#newTask").val();
     var newString = removeChar(newTask);
     var date = new Date();
-    var taskId = date.getTime();
+    var taskId = "ToDoList_" + date.getTime();
     if (newString.trim() !== '') {
         let taskObj = {
             id: taskId,
@@ -136,14 +102,6 @@ function removeFromList(task) {
         confirmBtn.off('click'); //usuwanie listenera na buttonie usuń
     });
 }
-
-// confirmBtn.on('hide.bs.modal', function () {
-//     //confirmBtn.off('click');
-//     console.log('hide modal');
-//   });
-//   confirmBtn.modal('hide');
-
-
 
 
 $(document).on('click', '.btn-danger', function (e) {
