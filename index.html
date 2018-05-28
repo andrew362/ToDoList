@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
     <style>
         li p {
             margin: 0;
@@ -26,7 +26,7 @@
 </head>
 <body>
    
-    <!-- Modal -->
+    <!-- Modal Remove-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -46,6 +46,27 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Edit-->
+    <div class="modal" id="editModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Task</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input class="form-control" id="editTaskModal" type="text">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="saveEdit" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- Main Content -->
     
@@ -71,12 +92,9 @@
         </div>
     </main>
 
-
-
-    <script src="jquery-3.2.1.slim.min.js"></script>
-    <script src="bootstrap.min.js"></script>
-    <!--    <script src="./jquery-3.3.1.js"></script>-->
-    <script src="script.js"></script>
+    <script src="scripts/jquery-3.2.1.slim.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/script.js"></script>
 
 </body>
 </html>
